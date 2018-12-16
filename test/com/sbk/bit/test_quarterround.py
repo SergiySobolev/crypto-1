@@ -7,7 +7,6 @@ from com.sbk.bit.quarter_round import quarter_round
 
 class TestQuarterRound(unittest.TestCase):
 
-
     @parameterized.expand([
         ["1", (0x00000001, 0x00000000, 0x00000000, 0x00000000), (0x08008145, 0x00000080, 0x00010200, 0x20500000)],
         ["2", (0x00000000, 0x00000000, 0x00000000, 0x00000001), (0x00048044, 0x00000080, 0x00010000, 0x20100001)],

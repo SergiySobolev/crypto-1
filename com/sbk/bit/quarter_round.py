@@ -9,8 +9,6 @@ def quarter_round(y):
     return [z0, z1, z2, z3]
 
 
-
-
 def left_rotate(number, bits, word_size=32):
     wraparound = number >> word_size - bits
     shifted = number << bits & 2 ** word_size - 1
