@@ -13,3 +13,4 @@ def str_to_hex(s):
 
 def str_to_hex_oct(s):
     return ''.join(''.join(oct(ord(c)))[2:] for c in s)
+
