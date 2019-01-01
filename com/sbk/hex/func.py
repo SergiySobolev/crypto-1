@@ -14,3 +14,7 @@ def str_to_hex(s):
 def str_to_hex_oct(s):
     return ''.join(''.join(oct(ord(c)))[2:] for c in s)
 
+
+def str_xor(str_a, str_b):
+    return "".join(chr(chrA ^ chrB) for (chrA, chrB) in zip(str_a, str_b))
+

@@ -1,5 +1,7 @@
 from Crypto.Cipher import AES
 
+from com.sbk.hex.func import str_xor
+
 
 def cbc_decrypt(key, cypher_text, block_size=16):
     k = bytes.fromhex(key)
@@ -13,29 +15,21 @@ def cbc_decrypt(key, cypher_text, block_size=16):
 
 
 def my_cbc_decrypt(key, cipher_text, block_size=16):
-    cypherTextBlocks = [cipher_text[i:i + (block_size * 2)] for i in range(0, len(cipher_text), (block_size * 2))]
-    to_byte_func = lambda x: bytes.fromhex(x)
-    cipher_text_blocks_bytes = list(map(to_byte_func, cypherTextBlocks))
+    cipher_text_blocks = [cipher_text[i:i + (block_size * 2)] for i in range(0, len(cipher_text), (block_size * 2))]
+    cipher_text_blocks_bytes = list(map(lambda x: bytes.fromhex(x), cipher_text_blocks))
     k = bytes.fromhex(key)
 
     pt = ""
 
     ln = len(cipher_text_blocks_bytes)
-    for c in reversed(cipher_text_blocks_bytes):
-        ln = ln - 1
-        if ln > 0:
-            cipher = AES.new(k, AES.MODE_ECB).decrypt(c)
-            plaintext = strxor(cipher, cipher_text_blocks_bytes[ln - 1])
-            pt = plaintext + pt
+    for i in reversed(range(1, ln)):
+        current_block = cipher_text_blocks_bytes[i]
+        previous_block = cipher_text_blocks_bytes[i - 1]
+        cipher = AES.new(k, AES.MODE_ECB).decrypt(current_block)
+        plaintext = str_xor(cipher, previous_block)
+        pt = plaintext + pt
 
-    padding_amount = ord(pt[len(pt) - 1:])
+    padding_amount = ord(pt[-1:])
 
     return pt[:-padding_amount]
-
-
-def strxor(str_a, str_b):
-    return "".join(chr(chrA ^ chrB) for (chrA, chrB) in zip(str_a, str_b))
-
-
-
 
