@@ -18,3 +18,10 @@ def str_to_hex_oct(s):
 def str_xor(str_a, str_b):
     return "".join(chr(chrA ^ chrB) for (chrA, chrB) in zip(str_a, str_b))
 
+
+def hex_xor(a, b, c):
+    return hex(int(a, 16) ^ int(b, 16) ^ int(c, 16))[2:]
+
+
+
+
